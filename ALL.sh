@@ -5,7 +5,7 @@ GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
 # 读取用户输入的国家/地区
-read -p "请输入国家代码 (例如: SG, AU, IN, CA): " COUNTRY
+read -p "请输入国家代码 (例如: SG, AU, IN, CA, DE): " COUNTRY
 
 # 确保输入的国家代码是大写
 COUNTRY=$(echo "$COUNTRY" | tr '[:lower:]' '[:upper:]')
@@ -34,6 +34,11 @@ case "$COUNTRY" in
         CONFIG_URL="https://raw.githubusercontent.com/w243420707/20240725/main/config/in.json"
         AGENT_KEY="lA6WODakEauns1eiEv"
         ;;
+    DE)
+        DOMAIN="hy-de-l14ehusajhz18.fly64jfgwhale.xyz"
+        CONFIG_URL="https://raw.githubusercontent.com/w243420707/20240725/main/config/de.json"
+        AGENT_KEY="Um5y77VNADb9d5Krc1"
+        ;;        
 esac
 
 # 执行命令并输出成功消息
@@ -149,7 +154,10 @@ case "$COUNTRY" in
         ;;
     CA)
         AGENT_URL="https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh"
-        ;;        
+        ;;   
+    DE)
+        AGENT_URL="https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh"
+        ;;               
 esac
 
 execute_step 11 "
