@@ -4,14 +4,13 @@
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
-# 获取本机的公共IP地址
-PUBLIC_IP=$(curl -s ifconfig.me)
+# 读取用户输入的国家/地区
+read -p "请输入国家代码 (例如: SG, AU, IN): " COUNTRY
 
-# 获取IP地址的地理位置信息
-LOCATION=$(curl -s "https://ipinfo.io/${PUBLIC_IP}/json")
-COUNTRY=$(echo "$LOCATION" | jq -r '.country')
+# 确保输入的国家代码是大写
+COUNTRY=$(echo "$COUNTRY" | tr '[:lower:]' '[:upper:]')
 
-echo -e "${GREEN}检测到的国家: ${COUNTRY}${NC}"
+echo -e "${GREEN}选择的国家: ${COUNTRY}${NC}"
 
 # 根据国家设置相关变量
 case "$COUNTRY" in
@@ -25,7 +24,7 @@ case "$COUNTRY" in
         CONFIG_URL="https://raw.githubusercontent.com/w243420707/20240725/main/config/au.json"
         AGENT_KEY="rYchIL1LTRzjZbDyVw"
         ;;
-    IN|IND)
+    *)
         DOMAIN="hy-in-l4ehusajhz18.fly64jfgwhale.xyz"
         CONFIG_URL="https://raw.githubusercontent.com/w243420707/20240725/main/config/in.json"
         AGENT_KEY="lA6WODakEauns1eiEv"
@@ -140,7 +139,7 @@ case "$COUNTRY" in
     AU|AUS)
         AGENT_URL="https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh"
         ;;
-    IN|IND)
+    *)
         AGENT_URL="https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh"
         ;;
 esac
