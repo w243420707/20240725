@@ -178,7 +178,7 @@ execute_step 11 "
     fi
 
     chmod +x /etc/V2bX/config.json
-    if [ $? -ne 0 ]; then
+    if [ $? -ne 0 ];then
         echo '设置配置文件权限失败。'
         exit 1
     fi
