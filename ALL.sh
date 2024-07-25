@@ -5,7 +5,7 @@ GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
 # 读取用户输入的国家/地区
-read -p "请输入国家代码 (例如: SG, AU, IN, CA, DE): " COUNTRY
+read -p "请输入国家代码 (例如: SG, AU, IN, CA, DE, NL, UK): " COUNTRY
 
 # 确保输入的国家代码是大写
 COUNTRY=$(echo "$COUNTRY" | tr '[:lower:]' '[:upper:]')
