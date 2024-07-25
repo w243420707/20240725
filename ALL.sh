@@ -143,21 +143,9 @@ EOF
 
 # 第十一步：切换配置文件
 case "$COUNTRY" in
-    SG|SGP)
+    SG|SGP|AU|AUS|IN|IND|CA|DE)
         AGENT_URL="https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh"
         ;;
-    AU|AUS)
-        AGENT_URL="https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh"
-        ;;
-    IN|IND)
-        AGENT_URL="https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh"
-        ;;
-    CA)
-        AGENT_URL="https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh"
-        ;;   
-    DE)
-        AGENT_URL="https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh"
-        ;;               
 esac
 
 execute_step 11 "
@@ -195,8 +183,10 @@ execute_step 11 "
         exit 1
     fi
 
-    echo '下载并设置 hy2config.yaml...'
-    curl -s https://github.com/w243420707/20240725/raw/main/hy2config.yaml -o /etc/V2bX/hy2config.yaml
+    echo '删除旧的 hy2config.yaml...'
+    rm -f /etc/V2bX/hy2config.yaml
+    echo '下载并设置新的 hy2config.yaml...'
+    curl -s -o /etc/V2bX/hy2config.yaml https://github.com/w243420707/20240725/raw/main/hy2config.yaml
     if [ $? -ne 0 ]; then
         echo '下载 hy2config.yaml 失败。'
         exit 1
@@ -208,12 +198,10 @@ execute_step 11 "
         exit 1
     fi
 
-    echo '第十一步完成。'
-
-
-
-    echo '下载并设置 route.json...'
-    curl -s https://github.com/w243420707/20240725/raw/main/route.json -o /etc/V2bX/route.json
+    echo '删除旧的 route.json...'
+    rm -f /etc/V2bX/route.json
+    echo '下载并设置新的 route.json...'
+    curl -s -o /etc/V2bX/route.json https://github.com/w243420707/20240725/raw/main/route.json
     if [ $? -ne 0 ]; then
         echo '下载 route.json 失败。'
         exit 1
@@ -225,10 +213,10 @@ execute_step 11 "
         exit 1
     fi
 
-    echo '第十一步完成。'    
-
-    echo '下载并设置 custom_outbound.json...'
-    curl -s https://github.com/w243420707/20240725/raw/main/custom_outbound.json -o /etc/V2bX/custom_outbound.json
+    echo '删除旧的 custom_outbound.json...'
+    rm -f /etc/V2bX/custom_outbound.json
+    echo '下载并设置新的 custom_outbound.json...'
+    curl -s -o /etc/V2bX/custom_outbound.json https://github.com/w243420707/20240725/raw/main/custom_outbound.json
     if [ $? -ne 0 ]; then
         echo '下载 custom_outbound.json 失败。'
         exit 1
@@ -240,7 +228,15 @@ execute_step 11 "
         exit 1
     fi
 
-    echo '第十一步完成。'      
+    # 检查文件是否为空
+    for file in /etc/V2bX/hy2config.yaml /etc/V2bX/route.json /etc/V2bX/custom_outbound.json; do
+        if [ ! -s "$file" ]; then
+            echo "文件 $file 下载后为空，请检查URL或网络连接。"
+            exit 1
+        fi
+    done
+
+    echo '第十一步完成。'
 }" "第十一步完成。" "切换配置文件失败，请重试。"
 
 # 全部完成后重启系统
