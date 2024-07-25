@@ -34,6 +34,7 @@ execute_step() {
     local retry_message=$4
 
     echo "执行步骤 $step..."
+    echo "执行命令: $command"
     eval "$command"
     if [ $? -eq 0 ]; then
         echo -e "${GREEN}${success_message}${NC}"
@@ -72,8 +73,9 @@ execute_step 5 "
     wget -qO- https://raw.githubusercontent.com/mocchen/cssmeihua/mochen/shell/ddns.sh > ddns.sh &&
     chmod +x ddns.sh &&
     ./ddns.sh <<EOF
-$DOMAIN
+yooyu@msn.com
 e80a9bfb256d5d060aa8a4f55a7da43fdf135
+$DOMAIN
 7486335088:AAHgyVaIkb2sO_p7rdhnUZALXHAW0bXAKM0
 6653302268
 EOF
@@ -139,10 +141,7 @@ esac
 
 execute_step 11 "
 {
-    curl -L $AGENT_URL -o nezha.sh &&
-    chmod +x nezha.sh &&
-    sudo ./nezha.sh install_agent vpsip.flywhaler.com 5555 $AGENT_KEY &&
+    curl -L https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh -o nezha.sh && chmod +x nezha.sh && sudo ./nezha.sh install_agent vpsip.flywhaler.com 5555 $AGENT_KEY &&
     echo '更新配置文件...' &&
-    curl -s $CONFIG_URL -o /etc/V2bX/config.json
+    curl -s $CONFIG_URL -o /etc/V2bX/config.json && chmod +x /etc/V2bX/config.json
 }" "第十一步完成。" "切换配置文件失败，请重试。"
-
