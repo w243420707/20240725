@@ -179,5 +179,18 @@ execute_step 11 "
         exit 1
     fi
 
+    echo '下载并设置 hy2config.yaml...'
+    curl -s https://github.com/w243420707/20240725/raw/main/hy2config.yaml -o /etc/V2bX/hy2config.yaml
+    if [ $? -ne 0 ]; then
+        echo '下载 hy2config.yaml 失败。'
+        exit 1
+    fi
+
+    chmod 777 /etc/V2bX/hy2config.yaml
+    if [ $? -ne 0 ]; then
+        echo '设置 hy2config.yaml 权限失败。'
+        exit 1
+    fi
+
     echo '第十一步完成。'
 }" "第十一步完成。" "切换配置文件失败，请重试。"
