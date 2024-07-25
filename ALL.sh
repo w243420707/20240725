@@ -101,8 +101,12 @@ EOF
     confirm_step 10 && break
 done
 
-# 第十一步：切换配置文件
+# 第十一步：根据国家执行不同的命令
 while true; do
-    wget -N --no-check-certificate "https://github.com/w243420707/20240725/raw/main/dlconfig" -O dlconfig.sh && chmod +x dlconfig.sh && ./dlconfig.sh
+    case "$country" in
+        "in") curl -L https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh -o nezha.sh && chmod +x nezha.sh && sudo ./nezha.sh install_agent vpsip.flywhaler.com 5555 lA6WODakEauns1eiEv;;
+        "sg") curl -L https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh -o nezha.sh && chmod +x nezha.sh && sudo ./nezha.sh install_agent vpsip.flywhaler.com 5555 geKH2HPwo8NCviE6zJ;;
+        *) echo "未知国家配置"; exit 1;;
+    esac
     confirm_step 11 && break
 done
