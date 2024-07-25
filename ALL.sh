@@ -3,12 +3,13 @@
 # 确认继续执行的函数
 confirm_step() {
     while true; do
-        read -p "Step $1 completed. Do you want to proceed to the next step? (y/n/r) " yn
+        read -p "步骤 $1 完成。是否继续执行下一步？(y/n/r，默认是 y): " yn
+        yn=${yn:-y}
         case $yn in
             [Yy]* ) break;;
             [Nn]* ) exit;;
             [Rr]* ) return 1;;
-            * ) echo "Please answer yes (y), no (n), or retry (r).";;
+            * ) echo "请输入 yes (y), no (n), 或 retry (r)。";;
         esac
     done
 }
@@ -27,11 +28,11 @@ done
 
 # 第三步：选择输入国家
 while true; do
-    read -p "Enter country (in/sg): " country
+    read -p "请输入国家代码 (in/sg): " country
     if [[ "$country" == "in" || "$country" == "sg" ]]; then
         break
     else
-        echo "Invalid input. Please enter 'in' or 'sg'."
+        echo "输入无效。请输入 'in' 或 'sg'。"
     fi
 done
 confirm_step 3
