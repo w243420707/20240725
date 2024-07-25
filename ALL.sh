@@ -43,18 +43,22 @@ done
 # 第五步：执行 ddns.sh 脚本
 while true; do
     bash <(wget -qO- https://raw.githubusercontent.com/mocchen/cssmeihua/mochen/shell/ddns.sh)<<EOF
-2
-EOF <<EOF
+yooyu@msn.com
+e80a9bfb256d5d060aa8a4f55a7da43fdf135
 1
-EOF <<EOF
-/n
+1
 EOF
     confirm_step 5 && break
 done
 
 # 第六步：下载并运行 menu.sh 脚本，选择选项 6
 while true; do
-    wget -N https://gitlab.com/fscarmen/warp/-/raw/main/menu.sh && bash menu.sh 6
+    wget -N https://gitlab.com/fscarmen/warp/-/raw/main/menu.sh && bash menu.sh 6 <<EOF
+2
+1
+1
+3
+EOF
     confirm_step 6 && break
 done
 
@@ -62,9 +66,7 @@ done
 while true; do
     warp <<EOF
 11
-EOF <<EOF
 1
-EOF <<EOF
 1
 EOF
     confirm_step 8 && break
@@ -78,16 +80,7 @@ EOF
     confirm_step 7 && break
 done
 
-# 第八步：根据国家下载并运行 nezha.sh 脚本
-while true; do
-    if [[ "$country" == "in" ]]; then
-        curl -L https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh -o nezha.sh && chmod +x nezha.sh && sudo ./nezha.sh install_agent vpsip.flywhaler.com 5555 lA6WODakEauns1eiEv
-    fi    
-    if [[ "$country" == "sg" ]]; then
-        curl -L https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh -o nezha.sh && chmod +x nezha.sh && sudo ./nezha.sh install_agent vpsip.flywhaler.com 5555 geKH2HPwo8NCviE6zJ
-    fi
-    confirm_step 8 && break
-done
+
 
 # 第九步：删除 config.json 文件并根据国家下载新的配置文件
 while true; do
