@@ -39,6 +39,17 @@ case "$COUNTRY" in
         CONFIG_URL="https://raw.githubusercontent.com/w243420707/20240725/main/config/de.json"
         AGENT_KEY="Um5y77VNADb9d5Krc1"
         ;;        
+
+    UK)
+        DOMAIN="hy-uk-l4ehusajhz18.fly64jfgwhale.xyz"
+        CONFIG_URL="https://raw.githubusercontent.com/w243420707/20240725/main/config/uk.json"
+        AGENT_KEY="FALwm9kQyWL7u4k21F"
+        ;;    
+    NL)
+        DOMAIN="hy-nl-l4ehusajhz18.fly64jfgwhale.xyz"
+        CONFIG_URL="https://raw.githubusercontent.com/w243420707/20240725/main/config/nl.json"
+        AGENT_KEY="F9ASScSS4CXhrFMjUQ"
+        ;;            
 esac
 
 # 执行命令并输出成功消息
@@ -145,7 +156,7 @@ EOF
 AGENT_URL="https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh"
 
 case "$COUNTRY" in
-    SG|SGP|AU|AUS|IN|IND|CA|DE)
+    SG|SGP|AU|AUS|IN|IND|CA|DE|NL|UK)
         # Do nothing, AGENT_URL is already set
         ;;
 esac
