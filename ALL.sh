@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# 设置国家变量，优先从命令行参数获取
+country=$1
+
+# 如果没有传递参数，则通过交互式输入获取
+if [ -z "$country" ]; then
+    read -p "请输入国家代码 (in/sg): " country
+fi
+
 # 确认继续执行的函数
 confirm_step() {
     while true; do
