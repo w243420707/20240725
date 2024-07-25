@@ -4,36 +4,20 @@
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
-# 确认继续执行的函数
-confirm_step() {
-    while true; do
-        read -p "步骤 $1 完成。是否继续执行下一步？(y/n/r，默认是 y): " yn
-        yn=${yn:-y}
-        case $yn in
-            [Yy]* ) return 0;;  # 继续执行
-            [Nn]* ) exit 1;;    # 退出
-            [Rr]* ) return 1;;  # 重试
-            * ) echo "请输入 yes (y), no (n), 或 retry (r)。";;
-        esac
-    done
-}
-
-# 执行命令并确认步骤
+# 执行命令并输出成功消息
 execute_step() {
     local step=$1
     local command=$2
     local success_message=$3
     local retry_message=$4
 
-    while true; do
-        eval "$command"
-        if [ $? -eq 0 ]; then
-            echo -e "${GREEN}${success_message}${NC}"
-            confirm_step $step && break
-        else
-            echo "$retry_message"
-        fi
-    done
+    echo "执行步骤 $step..."
+    eval "$command"
+    if [ $? -eq 0 ]; then
+        echo -e "${GREEN}${success_message}${NC}"
+    else
+        echo "$retry_message"
+    fi
 }
 
 # 启动进度条的函数
@@ -119,8 +103,6 @@ EOF
 } > tcp.log 2>&1" "脚本 tcp.sh 执行成功。" "下载或执行脚本 tcp.sh 失败，请重试。请查看 tcp.log 文件以获取详细错误信息。"
 
 # 第十一步：切换配置文件
-execute_step 11 "
 wget -N --no-check-certificate 'https://github.com/w243420707/20240725/raw/main/dlconfig' -O dlconfig.sh &&
 chmod +x dlconfig.sh &&
 ./dlconfig.sh
-
