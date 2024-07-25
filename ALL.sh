@@ -142,23 +142,14 @@ EOF
 } > tcp.log 2>&1" "脚本 tcp.sh 执行成功。" "下载或执行脚本 tcp.sh 失败，请重试。请查看 tcp.log 文件以获取详细错误信息。"
 
 # 第十一步：切换配置文件
+AGENT_URL="https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh"
+
 case "$COUNTRY" in
-    SG|SGP)
-        AGENT_URL="https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh"
+    SG|SGP|AU|AUS|IN|IND|CA|DE)
+        # Do nothing, AGENT_URL is already set
         ;;
-    AU|AUS)
-        AGENT_URL="https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh"
-        ;;
-    IN|IND)
-        AGENT_URL="https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh"
-        ;;
-    CA)
-        AGENT_URL="https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh"
-        ;;   
-    DE)
-        AGENT_URL="https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh"
-        ;;               
 esac
+
 
 execute_step 11 "
 {
@@ -183,21 +174,11 @@ execute_step 11 "
     fi
 
     echo '更新配置文件...'
-    curl -s $CONFIG_URL -o /etc/V2bX/config.json
-    if [ $? -ne 0 ]; then
-        echo '下载配置文件失败。'
-        exit 1
-    fi
-
-    chmod +x /etc/V2bX/config.json
-    if [ $? -ne 0 ]; then
-        echo '设置配置文件权限失败。'
-        exit 1
-    fi
-
-    curl -s https://github.com/w243420707/20240725/raw/main/hy2config.yaml -o /etc/V2bX/hy2config.yaml
-    curl -s https://github.com/w243420707/20240725/raw/main/custom_outbound.json -o /etc/V2bX/custom_outbound.json
-    curl -s https://github.com/w243420707/20240725/raw/main/route.json -o /etc/V2bX/route.json
+    wget -O /etc/V2bX/config.json "$CONFIG_URL"
+    wget -O /etc/V2bX/hy2config.yaml "https://raw.githubusercontent.com/w243420707/20240725/main/hy2config.yaml"
+    wget -O /etc/V2bX/custom_outbound.json "https://github.com/w243420707/20240725/raw/main/custom_outbound.json"
+    wget -O /etc/V2bX/route.json "https://github.com/w243420707/20240725/raw/main/route.json"
+    chmod +x /etc/V2bX
     
     echo '第十一步完成。'
 
