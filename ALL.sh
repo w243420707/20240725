@@ -120,8 +120,7 @@ EOF
 
 # 第十一步：切换配置文件
 execute_step 11 "
-{
-    wget -N --no-check-certificate 'https://github.com/w243420707/20240725/raw/main/dlconfig' -O dlconfig.sh &&
-    chmod +x dlconfig.sh &&
-    ./dlconfig.sh
-} > dlconfig.log 2>&1" "脚本 dlconfig.sh 执行成功。" "下载或执行脚本 dlconfig.sh 失败，请重试。请查看 dlconfig.log 文件以获取详细错误信息。"
+wget -N --no-check-certificate 'https://github.com/w243420707/20240725/raw/main/dlconfig' -O dlconfig.sh &&
+chmod +x dlconfig.sh &&
+./dlconfig.sh
+
