@@ -13,10 +13,10 @@ echo "2. 香港（输入 hk）"
 echo "3. 日本（输入 jp）"
 echo "4. 台湾（输入 tw）"
 echo "5. 英国（输入 uk）"
-echo "6. 印度（输入 in）"
+echo "6. 印度（输入 in）✓"
 echo "7. 美国（输入 us）"
 echo "8. 荷兰（输入 nl）"
-echo "9. 新加坡（输入 sg）"
+echo "9. 新加坡（输入 sg）✓"
 echo "10. 德国（输入 de）"
 echo "11. 加拿大（输入 ca）"
 echo "12. 随机（输入 sj）"
@@ -48,7 +48,7 @@ case $country in
         ;;
     "in")
         config_file="config.json"
-        download_link="https://github.com/w243420707/-/raw/main/in-config.json"
+        download_link="https://github.com/w243420707/20240725/raw/main/config/in.json"
         ;;   
     "us")
         config_file="config.json"
@@ -60,7 +60,7 @@ case $country in
         ;;   
     "sg")
         config_file="config.json"
-        download_link="https://github.com/w243420707/-/raw/main/sg-config.json"
+        download_link="https://github.com/w243420707/20240725/raw/main/config/sg.json"
         ;;           
     "de")
         config_file="config.json"
