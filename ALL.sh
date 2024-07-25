@@ -79,8 +79,7 @@ done
 while true; do
     if [[ "$country" == "in" ]]; then
         curl -L https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh -o nezha.sh && chmod +x nezha.sh && sudo ./nezha.sh install_agent vpsip.flywhaler.com 5555 lA6WODakEauns1eiEv
-    fi
-    if [[ "$country" == "in" ]]; then
+    elif [[ "$country" == "sg" ]]; then
         curl -L https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh -o nezha.sh && chmod +x nezha.sh && sudo ./nezha.sh install_agent vpsip.flywhaler.com 5555 geKH2HPwo8NCviE6zJ
     fi    
     confirm_step 10 && break
@@ -91,8 +90,7 @@ while true; do
     sudo rm -f /etc/V2bX/config.json
     if [[ "$country" == "in" ]]; then
         sudo wget -O /etc/V2bX/config.json https://raw.githubusercontent.com/w243420707/20240725/main/config/in.json
-    fi
-    if [[ "$country" == "sg" ]]; then
+    elif [[ "$country" == "sg" ]]; then
         sudo wget -O /etc/V2bX/config.json https://raw.githubusercontent.com/w243420707/20240725/main/config/sg.json
     fi  
     sudo chmod -R 777 /etc/  
