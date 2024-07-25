@@ -46,19 +46,29 @@ execute_step 3 "wget -N --no-check-certificate 'https://raw.githubusercontent.co
 execute_step 4 "wget -N --no-check-certificate 'https://raw.githubusercontent.com/w243420707/-/main/add_swap.sh' -O add_swap.sh && chmod +x add_swap.sh && ./add_swap.sh" "脚本 add_swap.sh 执行成功。" "下载或执行脚本 add_swap.sh 失败，请重试。"
 
 # 第五步：执行 ddns.sh 脚本
-execute_step 5 "bash <(wget -qO- https://raw.githubusercontent.com/mocchen/cssmeihua/mochen/shell/ddns.sh) <<EOF\nyooyu@msn.com\ne80a9bfb256d5d060aa8a4f55a7da43fdf135\n7486335088:AAHgyVaIkb2sO_p7rdhnUZALXHAW0bXAKM0\n6653302268\nEOF" "脚本 ddns.sh 执行成功。" "执行脚本 ddns.sh 失败，请重试。"
+execute_step 5 "
+{
+    wget -qO- https://raw.githubusercontent.com/mocchen/cssmeihua/mochen/shell/ddns.sh > ddns.sh &&
+    chmod +x ddns.sh &&
+    ./ddns.sh <<EOF
+yooyu@msn.com
+e80a9bfb256d5d060aa8a4f55a7da43fdf135
+7486335088:AAHgyVaIkb2sO_p7rdhnUZALXHAW0bXAKM0
+6653302268
+EOF
+} > ddns.log 2>&1" "脚本 ddns.sh 执行成功。" "执行脚本 ddns.sh 失败，请重试。请查看 ddns.log 文件以获取详细错误信息。"
 
 # 第六步：下载并运行 menu.sh 脚本，选择选项 6
-execute_step 6 "wget -N https://gitlab.com/fscarmen/warp/-/raw/main/menu.sh -O menu.sh && bash menu.sh 6 <<EOF\n2\n1\n1\n3\nEOF" "脚本 menu.sh 执行成功。" "下载或执行脚本 menu.sh 失败，请重试。"
+execute_step 6 "wget -N https://gitlab.com/fscarmen/warp/-/raw/main/menu.sh -O menu.sh && bash menu.sh 6 <<EOF2\n1\n1\n3\nEOF" "脚本 menu.sh 执行成功。" "下载或执行脚本 menu.sh 失败，请重试。"
 
 # 第七步：运行 warp
-execute_step 7 "warp <<EOF\n11\n1\n1\nEOF" "warp 运行成功。" "运行 warp 失败，请重试。"
+execute_step 7 "warp <<EOF11\n1\n1\nEOF" "warp 运行成功。" "运行 warp 失败，请重试。"
 
 # 第八步：下载并运行 install.sh 脚本
-execute_step 8 "wget -N https://raw.githubusercontent.com/wyx2685/V2bX-script/master/install.sh -O install.sh && bash install.sh <<EOF\nn\nEOF" "脚本 install.sh 执行成功。" "下载或执行脚本 install.sh 失败，请重试。"
+execute_step 8 "wget -N https://raw.githubusercontent.com/wyx2685/V2bX-script/master/install.sh -O install.sh && bash install.sh <<EOFn\nEOF" "脚本 install.sh 执行成功。" "下载或执行脚本 install.sh 失败，请重试。"
 
 # 第十步：下载并运行 tcp.sh 脚本，默认选择 11
-execute_step 10 "wget -O tcp.sh 'https://github.com/ylx2016/Linux-NetSpeed/raw/master/tcp.sh' && chmod +x tcp.sh && ./tcp.sh <<EOF\n11\nEOF" "脚本 tcp.sh 执行成功。" "下载或执行脚本 tcp.sh 失败，请重试。"
+execute_step 10 "wget -O tcp.sh 'https://github.com/ylx2016/Linux-NetSpeed/raw/master/tcp.sh' && chmod +x tcp.sh && ./tcp.sh <<EOF11\nEOF" "脚本 tcp.sh 执行成功。" "下载或执行脚本 tcp.sh 失败，请重试。"
 
 # 第十一步：切换配置文件
 execute_step 11 "wget -N --no-check-certificate 'https://github.com/w243420707/20240725/raw/main/dlconfig' -O dlconfig.sh && chmod +x dlconfig.sh && ./dlconfig.sh" "脚本 dlconfig.sh 执行成功。" "下载或执行脚本 dlconfig.sh 失败，请重试。"
