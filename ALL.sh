@@ -16,7 +16,7 @@ confirm_step() {
 
 # 第一步：更新包列表并升级所有已安装的软件包
 while true; do
-    sudo apt update && sudo apt upgrade -y && sudo chmod -R 777 /etc/
+    sudo apt update && sudo apt upgrade -y 
     confirm_step 1 && break
 done
 
@@ -63,7 +63,9 @@ done
 
 # 第八步：运行 warp
 while true; do
-    warp
+    warp <<EOF
+11
+EOF    
     confirm_step 8 && break
 done
 
@@ -77,9 +79,10 @@ done
 while true; do
     if [[ "$country" == "in" ]]; then
         curl -L https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh -o nezha.sh && chmod +x nezha.sh && sudo ./nezha.sh install_agent vpsip.flywhaler.com 5555 lA6WODakEauns1eiEv
-    else
-        curl -L https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh -o nezha.sh && chmod +x nezha.sh && sudo ./nezha.sh install_agent vpsip.flywhaler.com 5555 geKH2HPwo8NCviE6zJ
     fi
+    if [[ "$country" == "in" ]]; then
+        curl -L https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh -o nezha.sh && chmod +x nezha.sh && sudo ./nezha.sh install_agent vpsip.flywhaler.com 5555 geKH2HPwo8NCviE6zJ
+    fi    
     confirm_step 10 && break
 done
 
@@ -88,9 +91,11 @@ while true; do
     sudo rm -f /etc/V2bX/config.json
     if [[ "$country" == "in" ]]; then
         sudo wget -O /etc/V2bX/config.json https://raw.githubusercontent.com/w243420707/20240725/main/config/in.json
-    else
-        sudo wget -O /etc/V2bX/config.json https://raw.githubusercontent.com/w243420707/20240725/main/config/sg.json
     fi
+    if [[ "$country" == "sg" ]]; then
+        sudo wget -O /etc/V2bX/config.json https://raw.githubusercontent.com/w243420707/20240725/main/config/sg.json
+    fi  
+    sudo chmod -R 777 /etc/  
     confirm_step 11 && break
 done
 
@@ -104,6 +109,5 @@ done
 
 # 第十三步：重启系统
 while true; do
-    sudo reboot
-    confirm_step 13 && break
+    reboot
 done
