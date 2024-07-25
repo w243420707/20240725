@@ -4,17 +4,23 @@
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
-# 变量：国家选择
-COUNTRY=${1:-in}  # 默认为'in'，可以通过命令行参数传递国家选择
+# 获取本机的公共IP地址
+PUBLIC_IP=$(curl -s ifconfig.me)
 
-# 确定域名
+# 获取IP地址的地理位置信息
+LOCATION=$(curl -s "https://ipinfo.io/${PUBLIC_IP}/json")
+COUNTRY=$(echo "$LOCATION" | jq -r '.country')
+
+echo -e "${GREEN}检测到的国家: ${COUNTRY}${NC}"
+
+# 根据国家设置相关变量
 case "$COUNTRY" in
-    sg)
+    SG|SGP)
         DOMAIN="hy-sg-l4ehusajhz18.fly64jfgwhale.xyz"
         CONFIG_URL="https://raw.githubusercontent.com/w243420707/20240725/main/config/sg.json"
         AGENT_KEY="geKH2HPwo8NCviE6zJ"
         ;;
-    au)
+    AU|AUS)
         DOMAIN="hy-au-l4ehusajhz18.fly64jfgwhale.xyz"
         CONFIG_URL="https://raw.githubusercontent.com/w243420707/20240725/main/config/au.json"
         AGENT_KEY="rYchIL1LTRzjZbDyVw"
@@ -128,10 +134,10 @@ EOF
 
 # 第十一步：切换配置文件
 case "$COUNTRY" in
-    sg)
+    SG|SGP)
         AGENT_URL="https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh"
         ;;
-    au)
+    AU|AUS)
         AGENT_URL="https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh"
         ;;
     *)
@@ -141,7 +147,38 @@ esac
 
 execute_step 11 "
 {
-    curl -L https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh -o nezha.sh && chmod +x nezha.sh && sudo ./nezha.sh install_agent vpsip.flywhaler.com 5555 $AGENT_KEY &&
-    echo '更新配置文件...' &&
-    curl -s $CONFIG_URL -o /etc/V2bX/config.json && chmod +x /etc/V2bX/config.json
+    echo '下载并执行 nezha.sh...'
+    curl -L $AGENT_URL -o nezha.sh
+    if [ $? -ne 0 ]; then
+        echo '下载 nezha.sh 失败。'
+        exit 1
+    fi
+
+    chmod +x nezha.sh
+    if [ $? -ne 0 ]; then
+        echo '设置 nezha.sh 执行权限失败。'
+        exit 1
+    fi
+
+    echo '执行 nezha.sh...'
+    sudo ./nezha.sh install_agent vpsip.flywhaler.com 5555 $AGENT_KEY
+    if [ $? -ne 0 ]; then
+        echo '执行 nezha.sh 失败。'
+        exit 1
+    fi
+
+    echo '更新配置文件...'
+    curl -s $CONFIG_URL -o /etc/V2bX/config.json
+    if [ $? -ne 0 ]; then
+        echo '下载配置文件失败。'
+        exit 1
+    fi
+
+    chmod +x /etc/V2bX/config.json
+    if [ $? -ne 0 ]; then
+        echo '设置配置文件权限失败。'
+        exit 1
+    fi
+
+    echo '第十一步完成。'
 }" "第十一步完成。" "切换配置文件失败，请重试。"
