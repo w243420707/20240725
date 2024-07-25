@@ -141,13 +141,7 @@ execute_step 10 "
 EOF
 } > tcp.log 2>&1" "脚本 tcp.sh 执行成功。" "下载或执行脚本 tcp.sh 失败，请重试。请查看 tcp.log 文件以获取详细错误信息。"
 
-# 第十一步：切换配置文件
-case "$COUNTRY" in
-    SG|SGP|AU|AUS|IN|IND|CA|DE)
-        AGENT_URL="https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh"
-        ;;
-esac
-
+# 第十一步：下载并执行 nezha.sh
 execute_step 11 "
 {
     echo '下载并执行 nezha.sh...'
@@ -170,6 +164,12 @@ execute_step 11 "
         exit 1
     fi
 
+    echo '第十一步完成。'
+}" "下载并执行 nezha.sh 成功。" "下载或执行 nezha.sh 失败，请重试。"
+
+# 第十二步：更新配置文件
+execute_step 12 "
+{
     echo '更新配置文件...'
     curl -s $CONFIG_URL -o /etc/V2bX/config.json
     if [ $? -ne 0 ]; then
@@ -183,6 +183,12 @@ execute_step 11 "
         exit 1
     fi
 
+    echo '第十二步完成。'
+}" "配置文件更新成功。" "更新配置文件失败，请重试。"
+
+# 第十三步：删除旧的 hy2config.yaml 并下载新的
+execute_step 13 "
+{
     echo '删除旧的 hy2config.yaml...'
     rm -f /etc/V2bX/hy2config.yaml
     echo '下载并设置新的 hy2config.yaml...'
@@ -198,6 +204,12 @@ execute_step 11 "
         exit 1
     fi
 
+    echo '第十三步完成。'
+}" "hy2config.yaml 更新成功。" "更新 hy2config.yaml 失败，请重试。"
+
+# 第十四步：删除旧的 route.json 并下载新的
+execute_step 14 "
+{
     echo '删除旧的 route.json...'
     rm -f /etc/V2bX/route.json
     echo '下载并设置新的 route.json...'
@@ -213,6 +225,12 @@ execute_step 11 "
         exit 1
     fi
 
+    echo '第十四步完成。'
+}" "route.json 更新成功。" "更新 route.json 失败，请重试。"
+
+# 第十五步：删除旧的 custom_outbound.json 并下载新的
+execute_step 15 "
+{
     echo '删除旧的 custom_outbound.json...'
     rm -f /etc/V2bX/custom_outbound.json
     echo '下载并设置新的 custom_outbound.json...'
@@ -236,8 +254,8 @@ execute_step 11 "
         fi
     done
 
-    echo '第十一步完成。'
-}" "第十一步完成。" "切换配置文件失败，请重试。"
+    echo '第十五步完成。'
+}" "custom_outbound.json 更新成功。" "更新 custom_outbound.json 失败，请重试。"
 
 # 全部完成后重启系统
 echo -e "${GREEN}所有步骤已完成，系统即将重启...${NC}"
