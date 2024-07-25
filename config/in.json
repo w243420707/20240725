@@ -33,7 +33,7 @@
             "CertConfig": {
                 "CertMode": "http",
                 "RejectUnknownSni": false,
-                "CertDomain": "hy-in-l4ehusajhhz18.fly64jfgwhale.xyz",
+                "CertDomain": "hy-in-l14ehusajhhz18.fly64jfgwhale.xyz",
                 "CertFile": "/etc/V2bX/fullchain.cer",
                 "KeyFile": "/etc/V2bX/cert.key",
                 "Email": "v2bx@github.com",
@@ -82,7 +82,7 @@
             "CertConfig": {
                 "CertMode": "http",
                 "RejectUnknownSni": false,
-                "CertDomain": "hy-in-l4ehusajhhz18.fly64jfgwhale.xyz",
+                "CertDomain": "hy-in-l14ehusajhhz18.fly64jfgwhale.xyz",
                 "CertFile": "/etc/V2bX/fullchain.cer",
                 "KeyFile": "/etc/V2bX/cert.key",
                 "Email": "v2bx@github.com",
@@ -131,7 +131,7 @@
             "CertConfig": {
                 "CertMode": "http",
                 "RejectUnknownSni": false,
-                "CertDomain": "hy-in-l4ehusajhhz18.fly64jfgwhale.xyz",
+                "CertDomain": "hy-in-l14ehusajhhz18.fly64jfgwhale.xyz",
                 "CertFile": "/etc/V2bX/fullchain.cer",
                 "KeyFile": "/etc/V2bX/cert.key",
                 "Email": "v2bx@github.com",
