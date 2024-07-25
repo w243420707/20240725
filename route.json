@@ -26,26 +26,12 @@
         {
             "type": "field",
             "outboundTag": "block",
-            "domain": [
-                "regexp:(.+.|^)(360|so).(cn|com)"
-            ]
-        },
-        {
-            "type": "field",
-            "outboundTag": "block",
             "ip": [
                 "127.0.0.1/32",
                 "10.0.0.0/8",
                 "fc00::/7",
                 "fe80::/10",
                 "172.16.0.0/12"
-            ]
-        },
-        {
-            "type": "field",
-            "outboundTag": "block",
-            "protocol": [
-                "bittorrent"
             ]
         }
     ]
