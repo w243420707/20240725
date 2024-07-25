@@ -22,12 +22,6 @@ confirm_step() {
     done
 }
 
-# 第一步：更新包列表并升级所有已安装的软件包
-while true; do
-    sudo apt update && sudo apt upgrade -y
-    confirm_step 1 && break
-done
-
 # 第二步：禁用防火墙
 while true; do
     sudo ufw disable
