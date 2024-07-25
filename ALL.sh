@@ -55,6 +55,20 @@ while true; do
     confirm_step 6 && break
 done
 
+# 新增步骤：下载并运行 ddns.sh 脚本并输入参数
+while true; do
+    bash <(wget -qO- https://raw.githubusercontent.com/mocchen/cssmeihua/mochen/shell/ddns.sh)
+    expect -c "
+    spawn bash -c \"bash <(wget -qO- https://raw.githubusercontent.com/mocchen/cssmeihua/mochen/shell/ddns.sh)\"
+    expect \"邮箱地址: \" {send \"yooyu@msn.com\r\"}
+    expect \"Token: \" {send \"e80a9bfb256d5d060aa8a4f55a7da43fdf135\r\"}
+    expect \"Telegram_bot_token: \" {send \"7486335088:AAHgyVaIkb2sO_p7rdhnUZALXHAW0bXAKM0\r\"}
+    expect \"Telegram_chat_id: \" {send \"6653302268\r\"}
+    expect eof
+    "
+    confirm_step 6.5 && break
+done
+
 # 第七步：下载并运行 menu.sh 脚本，选择选项 6
 while true; do
     wget -N https://gitlab.com/fscarmen/warp/-/raw/main/menu.sh && bash menu.sh 6
