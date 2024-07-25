@@ -25,7 +25,7 @@ case "$COUNTRY" in
         AGENT_KEY="rYchIL1LTRzjZbDyVw"
         ;;
     IN|IND)
-        DOMAIN="hy-in-l4ehusajhz18.fly64jfgwhale.xyz"
+        DOMAIN="hy-in-l14ehusajhz18.fly64jfgwhale.xyz"
         CONFIG_URL="https://raw.githubusercontent.com/w243420707/20240725/main/config/in.json"
         AGENT_KEY="lA6WODakEauns1eiEv"
         ;;
