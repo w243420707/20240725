@@ -5,81 +5,31 @@
     },
     "Cores": [
     {
-        "Type": "sing",
+        "Type": "xray",
         "Log": {
             "Level": "error",
-            "Timestamp": true
+            "ErrorPath": "/etc/V2bX/error.log"
         },
-        "NTP": {
-            "Enable": false,
-            "Server": "time.apple.com",
-            "ServerPort": 0
-        },
-        "OriginalPath": "/etc/V2bX/sing_origin.json"
+        "OutboundConfigPath": "/etc/V2bX/custom_outbound.json",
+        "RouteConfigPath": "/etc/V2bX/route.json"
+    },
+    {
+        "Type": "hysteria2",
+        "Log": {
+            "Level": "error"
+        }
     }],
     "Nodes": [{
-            "Core": "sing",
-            "ApiHost": "https://new.shiyuanyinian.xyz",
-            "ApiKey": "yE4ZvHiqQQHdYPdv",
-            "NodeID": 19,
-            "NodeType": "hysteria2",
-            "Timeout": 30,
-            "ListenIP": "::",
-            "SendIP": "0.0.0.0",
-            "DeviceOnlineMinTraffic": 1000,
-            "TCPFastOpen": true,
-            "SniffEnabled": true,
-            "EnableDNS": true,
-            "CertConfig": {
-                "CertMode": "http",
-                "RejectUnknownSni": false,
-                "CertDomain": "hy-sg-l4ehusajhz18.fly64jfgwhale.xyz",
-                "CertFile": "/etc/V2bX/fullchain.cer",
-                "KeyFile": "/etc/V2bX/cert.key",
-                "Email": "v2bx@github.com",
-                "Provider": "cloudflare",
-                "DNSEnv": {
-                    "EnvName": "env1"
-                }
-            }
-        }, {
-            "Core": "sing",
-            "ApiHost": "https://new.shiyuanyinian.xyz",
-            "ApiKey": "yE4ZvHiqQQHdYPdv",
-            "NodeID": 25,
-            "NodeType": "shadowsocks",
-            "Timeout": 30,
-            "ListenIP": "::",
-            "SendIP": "0.0.0.0",
-            "DeviceOnlineMinTraffic": 1000,
-            "TCPFastOpen": true,
-            "SniffEnabled": true,
-            "EnableDNS": true,
-            "CertConfig": {
-                "CertMode": "none",
-                "RejectUnknownSni": false,
-                "CertDomain": "example.com",
-                "CertFile": "/etc/V2bX/fullchain.cer",
-                "KeyFile": "/etc/V2bX/cert.key",
-                "Email": "v2bx@github.com",
-                "Provider": "cloudflare",
-                "DNSEnv": {
-                    "EnvName": "env1"
-                }
-            }
-        },{
-            "Core": "sing",
+            "Core": "hysteria2",
             "ApiHost": "https://new.flywhaler.com",
             "ApiKey": "yE4ZvHiqQQHdYPdv",
             "NodeID": 19,
             "NodeType": "hysteria2",
+            "Hysteria2ConfigPath": "/etc/V2bX/hy2config.yaml",
             "Timeout": 30,
-            "ListenIP": "::",
+            "ListenIP": "",
             "SendIP": "0.0.0.0",
             "DeviceOnlineMinTraffic": 1000,
-            "TCPFastOpen": true,
-            "SniffEnabled": true,
-            "EnableDNS": true,
             "CertConfig": {
                 "CertMode": "http",
                 "RejectUnknownSni": false,
@@ -93,68 +43,19 @@
                 }
             }
         }, {
-            "Core": "sing",
+            "Core": "xray",
             "ApiHost": "https://new.flywhaler.com",
             "ApiKey": "yE4ZvHiqQQHdYPdv",
             "NodeID": 27,
             "NodeType": "shadowsocks",
             "Timeout": 30,
-            "ListenIP": "::",
+            "ListenIP": "0.0.0.0",
             "SendIP": "0.0.0.0",
             "DeviceOnlineMinTraffic": 1000,
-            "TCPFastOpen": true,
-            "SniffEnabled": true,
-            "EnableDNS": true,
-            "CertConfig": {
-                "CertMode": "none",
-                "RejectUnknownSni": false,
-                "CertDomain": "example.com",
-                "CertFile": "/etc/V2bX/fullchain.cer",
-                "KeyFile": "/etc/V2bX/cert.key",
-                "Email": "v2bx@github.com",
-                "Provider": "cloudflare",
-                "DNSEnv": {
-                    "EnvName": "env1"
-                }
-            }
-        },{
-            "Core": "sing",
-            "ApiHost": "https://m.passwalls.com",
-            "ApiKey": "yE4ZvHiqQQHdYPdv",
-            "NodeID": 19,
-            "NodeType": "hysteria2",
-            "Timeout": 30,
-            "ListenIP": "::",
-            "SendIP": "0.0.0.0",
-            "DeviceOnlineMinTraffic": 1000,
-            "TCPFastOpen": true,
-            "SniffEnabled": true,
-            "EnableDNS": true,
-            "CertConfig": {
-                "CertMode": "http",
-                "RejectUnknownSni": false,
-                "CertDomain": "hy-sg-l4ehusajhz18.fly64jfgwhale.xyz",
-                "CertFile": "/etc/V2bX/fullchain.cer",
-                "KeyFile": "/etc/V2bX/cert.key",
-                "Email": "v2bx@github.com",
-                "Provider": "cloudflare",
-                "DNSEnv": {
-                    "EnvName": "env1"
-                }
-            }
-        }, {
-            "Core": "sing",
-            "ApiHost": "https://m.passwalls.com",
-            "ApiKey": "yE4ZvHiqQQHdYPdv",
-            "NodeID": 25,
-            "NodeType": "shadowsocks",
-            "Timeout": 30,
-            "ListenIP": "::",
-            "SendIP": "0.0.0.0",
-            "DeviceOnlineMinTraffic": 1000,
-            "TCPFastOpen": true,
-            "SniffEnabled": true,
-            "EnableDNS": true,
+            "EnableProxyProtocol": false,
+            "EnableUot": true,
+            "EnableTFO": true,
+            "DNSType": "UseIPv4",
             "CertConfig": {
                 "CertMode": "none",
                 "RejectUnknownSni": false,
