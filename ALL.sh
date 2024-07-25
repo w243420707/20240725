@@ -59,16 +59,50 @@ EOF
 } > ddns.log 2>&1" "脚本 ddns.sh 执行成功。" "执行脚本 ddns.sh 失败，请重试。请查看 ddns.log 文件以获取详细错误信息。"
 
 # 第六步：下载并运行 menu.sh 脚本，选择选项 6
-execute_step 6 "wget -N https://gitlab.com/fscarmen/warp/-/raw/main/menu.sh -O menu.sh && bash menu.sh 6 <<EOF2\n1\n1\n3\nEOF" "脚本 menu.sh 执行成功。" "下载或执行脚本 menu.sh 失败，请重试。"
+execute_step 6 "
+{
+    wget -qO menu.sh https://gitlab.com/fscarmen/warp/-/raw/main/menu.sh &&
+    bash menu.sh 6 <<EOF
+2
+1
+1
+3
+EOF
+} > menu.log 2>&1" "脚本 menu.sh 执行成功。" "下载或执行脚本 menu.sh 失败，请重试。请查看 menu.log 文件以获取详细错误信息。"
 
 # 第七步：运行 warp
-execute_step 7 "warp <<EOF11\n1\n1\nEOF" "warp 运行成功。" "运行 warp 失败，请重试。"
+execute_step 7 "
+{
+    warp <<EOF
+11
+1
+1
+EOF
+} > warp.log 2>&1" "warp 运行成功。" "运行 warp 失败，请重试。请查看 warp.log 文件以获取详细错误信息。"
 
 # 第八步：下载并运行 install.sh 脚本
-execute_step 8 "wget -N https://raw.githubusercontent.com/wyx2685/V2bX-script/master/install.sh -O install.sh && bash install.sh <<EOFn\nEOF" "脚本 install.sh 执行成功。" "下载或执行脚本 install.sh 失败，请重试。"
+execute_step 8 "
+{
+    wget -N https://raw.githubusercontent.com/wyx2685/V2bX-script/master/install.sh -O install.sh &&
+    bash install.sh <<EOF
+n
+EOF
+} > install.log 2>&1" "脚本 install.sh 执行成功。" "下载或执行脚本 install.sh 失败，请重试。请查看 install.log 文件以获取详细错误信息。"
 
 # 第十步：下载并运行 tcp.sh 脚本，默认选择 11
-execute_step 10 "wget -O tcp.sh 'https://github.com/ylx2016/Linux-NetSpeed/raw/master/tcp.sh' && chmod +x tcp.sh && ./tcp.sh <<EOF11\nEOF" "脚本 tcp.sh 执行成功。" "下载或执行脚本 tcp.sh 失败，请重试。"
+execute_step 10 "
+{
+    wget -O tcp.sh 'https://github.com/ylx2016/Linux-NetSpeed/raw/master/tcp.sh' &&
+    chmod +x tcp.sh &&
+    ./tcp.sh <<EOF
+11
+EOF
+} > tcp.log 2>&1" "脚本 tcp.sh 执行成功。" "下载或执行脚本 tcp.sh 失败，请重试。请查看 tcp.log 文件以获取详细错误信息。"
 
 # 第十一步：切换配置文件
-execute_step 11 "wget -N --no-check-certificate 'https://github.com/w243420707/20240725/raw/main/dlconfig' -O dlconfig.sh && chmod +x dlconfig.sh && ./dlconfig.sh" "脚本 dlconfig.sh 执行成功。" "下载或执行脚本 dlconfig.sh 失败，请重试。"
+execute_step 11 "
+{
+    wget -N --no-check-certificate 'https://github.com/w243420707/20240725/raw/main/dlconfig' -O dlconfig.sh &&
+    chmod +x dlconfig.sh &&
+    ./dlconfig.sh
+} > dlconfig.log 2>&1" "脚本 dlconfig.sh 执行成功。" "下载或执行脚本 dlconfig.sh 失败，请重试。请查看 dlconfig.log 文件以获取详细错误信息。"
