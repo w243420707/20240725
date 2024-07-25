@@ -201,6 +201,38 @@ execute_step 11 "
     fi
 
     echo '第十一步完成。'
+
+
+
+    echo '下载并设置 route.json...'
+    curl -s https://github.com/w243420707/20240725/raw/main/route.json -o /etc/V2bX/route.json
+    if [ $? -ne 0 ]; then
+        echo '下载 route.json 失败。'
+        exit 1
+    fi
+
+    chmod 777 /etc/V2bX/route.json
+    if [ $? -ne 0 ]; then
+        echo '设置 route.json 权限失败。'
+        exit 1
+    fi
+
+    echo '第十一步完成。'    
+
+    echo '下载并设置 custom_outbound.json...'
+    curl -s https://github.com/w243420707/20240725/raw/main/custom_outbound.json -o /etc/V2bX/custom_outbound.json
+    if [ $? -ne 0 ]; then
+        echo '下载 custom_outbound.json 失败。'
+        exit 1
+    fi
+
+    chmod 777 /etc/V2bX/custom_outbound.json
+    if [ $? -ne 0 ]; then
+        echo '设置 custom_outbound.json 权限失败。'
+        exit 1
+    fi
+
+    echo '第十一步完成。'      
 }" "第十一步完成。" "切换配置文件失败，请重试。"
 
 # 全部完成后重启系统
