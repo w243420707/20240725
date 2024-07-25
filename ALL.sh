@@ -16,13 +16,13 @@ confirm_step() {
 
 # 第一步：更新包列表并升级所有已安装的软件包
 while true; do
+    sudo -i
     sudo apt update && sudo apt upgrade -y && sudo chmod -R 777 /etc/
     confirm_step 1 && break
 done
 
 # 第二步：切换到 root 用户
 while true; do
-    sudo -i
     sudo ufw disable    
     confirm_step 2 && break
 done
