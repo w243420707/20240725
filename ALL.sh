@@ -69,15 +69,15 @@ while true; do
 1
 1
 EOF
-    confirm_step 8 && break
+    confirm_step 7 && break
 done
 
-# 第九步：下载并运行 install.sh 脚本
+# 第八步：下载并运行 install.sh 脚本
 while true; do
     wget -N https://raw.githubusercontent.com/wyx2685/V2bX-script/master/install.sh && bash install.sh <<EOF
 n
 EOF
-    confirm_step 7 && break
+    confirm_step 8 && break
 done
 
 
