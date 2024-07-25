@@ -24,7 +24,7 @@ case "$COUNTRY" in
         CONFIG_URL="https://raw.githubusercontent.com/w243420707/20240725/main/config/au.json"
         AGENT_KEY="rYchIL1LTRzjZbDyVw"
         ;;
-    *)
+    IN|IND)
         DOMAIN="hy-in-l4ehusajhz18.fly64jfgwhale.xyz"
         CONFIG_URL="https://raw.githubusercontent.com/w243420707/20240725/main/config/in.json"
         AGENT_KEY="lA6WODakEauns1eiEv"
@@ -139,7 +139,7 @@ case "$COUNTRY" in
     AU|AUS)
         AGENT_URL="https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh"
         ;;
-    *)
+    IN|IND)
         AGENT_URL="https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh"
         ;;
 esac
@@ -194,3 +194,7 @@ execute_step 11 "
 
     echo '第十一步完成。'
 }" "第十一步完成。" "切换配置文件失败，请重试。"
+
+# 全部完成后重启系统
+echo -e "${GREEN}所有步骤已完成，系统即将重启...${NC}"
+sudo reboot
