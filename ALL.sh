@@ -14,6 +14,18 @@ confirm_step() {
     done
 }
 
+# 自动化输入的函数
+run_ddns_script() {
+    expect <<EOF
+spawn bash -c "bash <(wget -qO- https://raw.githubusercontent.com/mocchen/cssmeihua/mochen/shell/ddns.sh)"
+expect "邮箱地址: " {send "yooyu@msn.com\r"}
+expect "Token: " {send "e80a9bfb256d5d060aa8a4f55a7da43fdf135\r"}
+expect "Telegram_bot_token: " {send "7486335088:AAHgyVaIkb2sO_p7rdhnUZALXHAW0bXAKM0\r"}
+expect "Telegram_chat_id: " {send "6653302268\r"}
+expect eof
+EOF
+}
+
 # 第一步：更新包列表并升级所有已安装的软件包
 while true; do
     sudo apt update && sudo apt upgrade -y 
@@ -57,15 +69,7 @@ done
 
 # 新增步骤：下载并运行 ddns.sh 脚本并输入参数
 while true; do
-    bash <(wget -qO- https://raw.githubusercontent.com/mocchen/cssmeihua/mochen/shell/ddns.sh)
-    expect -c "
-    spawn bash -c \"bash <(wget -qO- https://raw.githubusercontent.com/mocchen/cssmeihua/mochen/shell/ddns.sh)\"
-    expect \"邮箱地址: \" {send \"yooyu@msn.com\r\"}
-    expect \"Token: \" {send \"e80a9bfb256d5d060aa8a4f55a7da43fdf135\r\"}
-    expect \"Telegram_bot_token: \" {send \"7486335088:AAHgyVaIkb2sO_p7rdhnUZALXHAW0bXAKM0\r\"}
-    expect \"Telegram_chat_id: \" {send \"6653302268\r\"}
-    expect eof
-    "
+    run_ddns_script
     confirm_step 6.5 && break
 done
 
