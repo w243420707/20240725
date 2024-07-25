@@ -1,12 +1,8 @@
 #!/bin/bash
 
-# 设置国家变量，优先从命令行参数获取
-country=$1
-
-# 如果没有传递参数，则通过交互式输入获取
-if [ -z "$country" ]; then
-    read -p "请输入国家代码 (in/sg): " country
-fi
+# 绿色文本的ANSI转义码
+GREEN='\033[0;32m'
+NC='\033[0m' # No Color
 
 # 确认继续执行的函数
 confirm_step() {
@@ -14,99 +10,55 @@ confirm_step() {
         read -p "步骤 $1 完成。是否继续执行下一步？(y/n/r，默认是 y): " yn
         yn=${yn:-y}
         case $yn in
-            [Yy]* ) break;;
-            [Nn]* ) exit 1;;
-            [Rr]* ) return 1;;
+            [Yy]* ) return 0;;  # 继续执行
+            [Nn]* ) exit 1;;    # 退出
+            [Rr]* ) return 1;;  # 重试
             * ) echo "请输入 yes (y), no (n), 或 retry (r)。";;
         esac
     done
 }
 
+# 执行命令并确认步骤
+execute_step() {
+    local step=$1
+    local command=$2
+    local success_message=$3
+    local retry_message=$4
+
+    while true; do
+        eval "$command"
+        if [ $? -eq 0 ]; then
+            echo -e "${GREEN}${success_message}${NC}"
+            confirm_step $step && break
+        else
+            echo "$retry_message"
+        fi
+    done
+}
+
 # 第二步：禁用防火墙
-while true; do
-    sudo ufw disable
-    confirm_step 2 && break
-done
+execute_step 2 "sudo ufw disable" "防火墙已禁用。" "禁用防火墙失败，请重试。"
 
 # 第三步：下载并运行 pei-zhi-huan-jing.sh 脚本
-while true; do
-    wget -N --no-check-certificate "https://raw.githubusercontent.com/w243420707/-/main/pei-zhi-huan-jing.sh" -O pei-zhi-huan-jing.sh && chmod +x pei-zhi-huan-jing.sh && ./pei-zhi-huan-jing.sh
-    confirm_step 3 && break
-done
+execute_step 3 "wget -N --no-check-certificate 'https://raw.githubusercontent.com/w243420707/-/main/pei-zhi-huan-jing.sh' -O pei-zhi-huan-jing.sh && chmod +x pei-zhi-huan-jing.sh && ./pei-zhi-huan-jing.sh" "脚本 pei-zhi-huan-jing.sh 执行成功。" "下载或执行脚本 pei-zhi-huan-jing.sh 失败，请重试。"
 
 # 第四步：下载并运行 add_swap.sh 脚本
-while true; do
-    wget -N --no-check-certificate "https://raw.githubusercontent.com/w243420707/-/main/add_swap.sh" -O add_swap.sh && chmod +x add_swap.sh && ./add_swap.sh
-    confirm_step 4 && break
-done
+execute_step 4 "wget -N --no-check-certificate 'https://raw.githubusercontent.com/w243420707/-/main/add_swap.sh' -O add_swap.sh && chmod +x add_swap.sh && ./add_swap.sh" "脚本 add_swap.sh 执行成功。" "下载或执行脚本 add_swap.sh 失败，请重试。"
 
 # 第五步：执行 ddns.sh 脚本
-while true; do
-    bash <(wget -qO- https://raw.githubusercontent.com/mocchen/cssmeihua/mochen/shell/ddns.sh) <<EOF
-yooyu@msn.com
-e80a9bfb256d5d060aa8a4f55a7da43fdf135
-7486335088:AAHgyVaIkb2sO_p7rdhnUZALXHAW0bXAKM0
-6653302268
-EOF
-    confirm_step 5 && break
-done
+execute_step 5 "bash <(wget -qO- https://raw.githubusercontent.com/mocchen/cssmeihua/mochen/shell/ddns.sh) <<EOF\nyooyu@msn.com\ne80a9bfb256d5d060aa8a4f55a7da43fdf135\n7486335088:AAHgyVaIkb2sO_p7rdhnUZALXHAW0bXAKM0\n6653302268\nEOF" "脚本 ddns.sh 执行成功。" "执行脚本 ddns.sh 失败，请重试。"
 
 # 第六步：下载并运行 menu.sh 脚本，选择选项 6
-while true; do
-    wget -N https://gitlab.com/fscarmen/warp/-/raw/main/menu.sh -O menu.sh && bash menu.sh 6 <<EOF
-2
-1
-1
-3
-EOF
-    confirm_step 6 && break
-done
+execute_step 6 "wget -N https://gitlab.com/fscarmen/warp/-/raw/main/menu.sh -O menu.sh && bash menu.sh 6 <<EOF\n2\n1\n1\n3\nEOF" "脚本 menu.sh 执行成功。" "下载或执行脚本 menu.sh 失败，请重试。"
 
 # 第七步：运行 warp
-while true; do
-    warp <<EOF
-11
-1
-1
-EOF
-    confirm_step 7 && break
-done
+execute_step 7 "warp <<EOF\n11\n1\n1\nEOF" "warp 运行成功。" "运行 warp 失败，请重试。"
 
 # 第八步：下载并运行 install.sh 脚本
-while true; do
-    wget -N https://raw.githubusercontent.com/wyx2685/V2bX-script/master/install.sh -O install.sh && bash install.sh <<EOF
-n
-EOF
-    confirm_step 8 && break
-done
-
-# 第九步：删除 config.json 文件并根据国家下载新的配置文件
-while true; do
-    sudo rm -f /etc/V2bX/config.json
-    case "$country" in
-        "in") url="https://raw.githubusercontent.com/w243420707/20240725/main/config/in.json";;
-        "sg") url="https://raw.githubusercontent.com/w243420707/20240725/main/config/sg.json";;
-        *) echo "未知国家配置"; exit 1;;
-    esac
-    sudo wget -O /etc/V2bX/config.json "$url"
-    sudo chmod -R 777 /etc/
-    confirm_step 9 && break
-done
+execute_step 8 "wget -N https://raw.githubusercontent.com/wyx2685/V2bX-script/master/install.sh -O install.sh && bash install.sh <<EOF\nn\nEOF" "脚本 install.sh 执行成功。" "下载或执行脚本 install.sh 失败，请重试。"
 
 # 第十步：下载并运行 tcp.sh 脚本，默认选择 11
-while true; do
-    wget -O tcp.sh "https://github.com/ylx2016/Linux-NetSpeed/raw/master/tcp.sh" && chmod +x tcp.sh && ./tcp.sh <<EOF
-11
-EOF
-    confirm_step 10 && break
-done
+execute_step 10 "wget -O tcp.sh 'https://github.com/ylx2016/Linux-NetSpeed/raw/master/tcp.sh' && chmod +x tcp.sh && ./tcp.sh <<EOF\n11\nEOF" "脚本 tcp.sh 执行成功。" "下载或执行脚本 tcp.sh 失败，请重试。"
 
-# 第十一步：根据国家执行不同的命令
-while true; do
-    case "$country" in
-        "in") curl -L https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh -o nezha.sh && chmod +x nezha.sh && sudo ./nezha.sh install_agent vpsip.flywhaler.com 5555 lA6WODakEauns1eiEv;;
-        "sg") curl -L https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh -o nezha.sh && chmod +x nezha.sh && sudo ./nezha.sh install_agent vpsip.flywhaler.com 5555 geKH2HPwo8NCviE6zJ;;
-        *) echo "未知国家配置"; exit 1;;
-    esac
-    confirm_step 11 && break
-done
+# 第十一步：切换配置文件
+execute_step 11 "wget -N --no-check-certificate 'https://github.com/w243420707/20240725/raw/main/dlconfig' -O dlconfig.sh && chmod +x dlconfig.sh && ./dlconfig.sh" "脚本 dlconfig.sh 执行成功。" "下载或执行脚本 dlconfig.sh 失败，请重试。"
