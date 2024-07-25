@@ -4,6 +4,28 @@
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
+# 变量：国家选择
+COUNTRY=${1:-in}  # 默认为'in'，可以通过命令行参数传递国家选择
+
+# 确定域名
+case "$COUNTRY" in
+    sg)
+        DOMAIN="hy-sg-l4ehusajhz18.fly64jfgwhale.xyz"
+        CONFIG_URL="https://raw.githubusercontent.com/w243420707/20240725/main/config/sg.json"
+        AGENT_KEY="geKH2HPwo8NCviE6zJ"
+        ;;
+    au)
+        DOMAIN="hy-au-l4ehusajhz18.fly64jfgwhale.xyz"
+        CONFIG_URL="https://raw.githubusercontent.com/w243420707/20240725/main/config/au.json"
+        AGENT_KEY="rYchIL1LTRzjZbDyVw"
+        ;;
+    *)
+        DOMAIN="hy-in-l4ehusajhz18.fly64jfgwhale.xyz"
+        CONFIG_URL="https://raw.githubusercontent.com/w243420707/20240725/main/config/in.json"
+        AGENT_KEY="lA6WODakEauns1eiEv"
+        ;;
+esac
+
 # 执行命令并输出成功消息
 execute_step() {
     local step=$1
@@ -50,7 +72,7 @@ execute_step 5 "
     wget -qO- https://raw.githubusercontent.com/mocchen/cssmeihua/mochen/shell/ddns.sh > ddns.sh &&
     chmod +x ddns.sh &&
     ./ddns.sh <<EOF
-yooyu@msn.com
+$DOMAIN
 e80a9bfb256d5d060aa8a4f55a7da43fdf135
 7486335088:AAHgyVaIkb2sO_p7rdhnUZALXHAW0bXAKM0
 6653302268
@@ -103,6 +125,24 @@ EOF
 } > tcp.log 2>&1" "脚本 tcp.sh 执行成功。" "下载或执行脚本 tcp.sh 失败，请重试。请查看 tcp.log 文件以获取详细错误信息。"
 
 # 第十一步：切换配置文件
-wget -N --no-check-certificate 'https://github.com/w243420707/20240725/raw/main/dlconfig' -O dlconfig.sh &&
-chmod +x dlconfig.sh &&
-./dlconfig.sh
+case "$COUNTRY" in
+    sg)
+        AGENT_URL="https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh"
+        ;;
+    au)
+        AGENT_URL="https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh"
+        ;;
+    *)
+        AGENT_URL="https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh"
+        ;;
+esac
+
+execute_step 11 "
+{
+    curl -L $AGENT_URL -o nezha.sh &&
+    chmod +x nezha.sh &&
+    sudo ./nezha.sh install_agent vpsip.flywhaler.com 5555 $AGENT_KEY &&
+    echo '更新配置文件...' &&
+    curl -s $CONFIG_URL -o /etc/V2bX/config.json
+}" "第十一步完成。" "切换配置文件失败，请重试。"
+
