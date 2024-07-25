@@ -36,6 +36,21 @@ execute_step() {
     done
 }
 
+# 启动进度条的函数
+show_progress() {
+    local duration=$1
+    echo -n "正在执行，请稍候: "
+    seq $duration | pv -n -s $duration | awk '{ printf("\r进度: [%s%s] %.2f%%", str_repeat("█", int($1*50/$duration)), str_repeat("░", 50-int($1*50/$duration)), $1*100/$duration) }'
+    echo ""
+}
+
+# 显示日志文件内容的函数
+display_log() {
+    local log_file=$1
+    echo -e "${GREEN}显示日志: ${log_file}${NC}"
+    cat "$log_file"
+}
+
 # 第二步：禁用防火墙
 execute_step 2 "sudo ufw disable" "防火墙已禁用。" "禁用防火墙失败，请重试。"
 
@@ -68,7 +83,11 @@ execute_step 6 "
 1
 3
 EOF
-} > menu.log 2>&1" "脚本 menu.sh 执行成功。" "下载或执行脚本 menu.sh 失败，请重试。请查看 menu.log 文件以获取详细错误信息。"
+} > menu.log 2>&1
+
+# 显示菜单日志内容
+display_log 'menu.log'
+" "脚本 menu.sh 执行成功。" "下载或执行脚本 menu.sh 失败，请重试。请查看 menu.log 文件以获取详细错误信息。"
 
 # 第七步：运行 warp
 execute_step 7 "
